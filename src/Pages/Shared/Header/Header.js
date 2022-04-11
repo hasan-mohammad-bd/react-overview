@@ -2,8 +2,8 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <header>
-            <h2>This is Header</h2>
+        <header className='text-center py-3'>
+            <h2>Car services</h2>
         </header>
     );
 };
