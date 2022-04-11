@@ -1,10 +1,23 @@
 import React from 'react';
+import { Container, Nav, Navbar } from "react-bootstrap"
+import logo from "../../../images/banner/logo.png"
 
 const Header = () => {
     return (
-        <header className='text-center py-3'>
-            <h2>Car services</h2>
-        </header>
+<>
+
+
+  <Navbar bg="primary" variant="dark">
+    <Container>
+    <Navbar.Brand href="#home"><img src={logo} height="40px" alt="" /></Navbar.Brand>
+    <Nav className="me-auto">
+      <Nav.Link href="#home">Home</Nav.Link>
+      <Nav.Link href="#features">Features</Nav.Link>
+      <Nav.Link href="#pricing">Pricing</Nav.Link>
+    </Nav>
+    </Container>
+  </Navbar>
+</>
     );
 };
 
