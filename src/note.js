@@ -18,6 +18,8 @@ react
 col-lg-4 = each content take 1/3 position of full bootstrap 12 column
 col-sm-12 = each content will take full position of the 12 column system.
 
+react bootstrap is same as normal bootstrap but instead of class it gives components with props 
+
 
 
 */
