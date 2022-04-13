@@ -20,6 +20,5 @@ col-sm-12 = each content will take full position of the 12 column system.
 
 react bootstrap is same as normal bootstrap but instead of class it gives components with props 
 
-
-
+//use useRef instead using onBlur or onChange
 */
