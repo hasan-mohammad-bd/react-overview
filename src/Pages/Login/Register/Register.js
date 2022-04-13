@@ -1,16 +1,33 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-
+    const navigate = useNavigate()
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useCreateUserWithEmailAndPassword(auth);
 
     const handleRegister = event => {
         event.preventDefault();
         const name = event.target.name.value;
-        const email = event.target.email;
-        const password = event.target.password;
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+        createUserWithEmailAndPassword(email, password)
+
     }
+
+    if(user){
+        navigate("/home")
+    }
+
+
     return (
         <div className='container w-50 mx-auto mt-5'>
         <Form onSubmit={handleRegister}>
@@ -22,7 +39,7 @@ const Register = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" required />
+          <Form.Control type="email" placeholder="Enter email" name="email" required />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -30,7 +47,7 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" required/>
+          <Form.Control type="password" placeholder="Password" name="password" required/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />

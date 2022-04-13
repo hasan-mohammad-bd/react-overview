@@ -1,22 +1,36 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import auth from "../../../firebase.init";
 
 const Login = () => {
-    const emailRef = useRef("");
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
+
+      let from = location.state?.from?.pathname || "/";
 
     //useRef is the way to get value from input steps: bring the useRef, set the event handler, set the email/password.current.value in submit event handler.
+    const emailRef = useRef("");
     const passwordRef = useRef("");
+    const location = useLocation()
     const navigate = useNavigate();
 
     const handleSubmit = event => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-
-
-        console.log(email, password);
+        signInWithEmailAndPassword(email, password)
     }
+
+    if(user){
+        navigate(from, {replace: true})
+    }
+
   return (
     <div className="container w-50 mx-auto mt-5">
       <h2 className="text-primary text-center">Please Login</h2>
