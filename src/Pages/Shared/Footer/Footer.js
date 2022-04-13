@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const Footer = () => {
     const today = new Date();
@@ -8,6 +9,7 @@ const Footer = () => {
             <p> &copy; Hasan Mohammad </p>
             <div>{year}</div>
         </footer>
+
     );
 };
 
