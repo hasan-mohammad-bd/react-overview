@@ -21,4 +21,15 @@ col-sm-12 = each content will take full position of the 12 column system.
 react bootstrap is same as normal bootstrap but instead of class it gives components with props 
 
 //use useRef instead using onBlur or onChange
+
+//github login setting process:
+1. go to github
+2. go to setting
+3. go to developer settings
+4. go to OAuth apps
+5. click on New OAuth app
+6. fill up the form.
+7. use url of the website.
+8. take the callback url from firebase and paste them into form
+9. copy and paste the client id and client secret from github to firebase.
 */

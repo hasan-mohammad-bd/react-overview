@@ -6,12 +6,19 @@ import auth from "../../../firebase.init";
 import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
+  let errorElement;
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
+
+      if (error) {
+        errorElement = <div>
+          <p className="text-danger">Error: {error?.message}</p>
+        </div>
+    }
 
       // let from = location?.state?.from?.pathname || "/";
 
@@ -50,6 +57,7 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
+        {errorElement}
         <Button variant="primary" type="submit">
           Submit
         </Button>

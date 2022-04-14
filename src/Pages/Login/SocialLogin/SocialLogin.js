@@ -2,21 +2,22 @@ import React from "react";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { FaFacebook } from "@react-icons/all-files/fa/FaFacebook";
 import { AiOutlineGithub } from "@react-icons/all-files/ai/AiOutlineGithub";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useSignInWithGithub, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import { useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
   let errorElement;
-  if (error) {
+  if (error || error1) {
       errorElement = <div>
-        <p className="text-danger">Error: {error.message}</p>
+        <p className="text-danger">Error: {error?.message} {error1?.message}</p>
       </div>
   }
 
-  if (user) {
+  if (user || user1) {
     navigate("/home");
   }
 
@@ -40,7 +41,7 @@ const SocialLogin = () => {
         </span>{" "}
         Facebook Sign In
       </button>
-      <button className="btn btn-info d-block mx-auto my-2">
+      <button onClick={()=> signInWithGithub()} className="btn btn-info d-block mx-auto my-2">
         <span className="mx-1">
           <AiOutlineGithub></AiOutlineGithub>
         </span>{" "}
