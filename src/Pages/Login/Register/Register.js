@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import { useNavigate } from "react-router-dom";
 import SocialLogin from '../SocialLogin/SocialLogin';
 
+
 const Register = () => {
     const navigate = useNavigate()
+    const [agree , setAgree] = useState(false);
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
         error,
-      ] = useCreateUserWithEmailAndPassword(auth);
+      ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
+      const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
-    const handleRegister = event => {
+      if(user){
+        console.log(user);
+      }
+
+    const handleRegister = async event => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
-        createUserWithEmailAndPassword(email, password)
+        const agree = event.target.terms.value;
+
+        await  createUserWithEmailAndPassword(email, password)
+        await updateProfile({displayName: name})
+        navigate("/home")
+
 
     }
 
@@ -51,10 +63,12 @@ const Register = () => {
           <Form.Control type="password" placeholder="Password" name="password" required/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
+          {/* conditional class is there */}
+          <Form.Check className={agree ? "ps-2 text-primary" : "ps-2 text-danger"} onClick={()=> setAgree(!agree)} type="checkbox" name="terms" label="Accept terms and conditions" />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
+        {/* disable is the agree is false / it is also conditional */}
+        <Button disabled={!agree} variant="primary w-50 d-black mx-auto" type="submit">
+          Register 
         </Button>
       </Form>
       <p>Already registered?<Link to={"/login"} className="text-danger pe-auto text-decoration-none">Please Login</Link></p>
