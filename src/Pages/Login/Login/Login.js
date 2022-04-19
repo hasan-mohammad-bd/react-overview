@@ -3,7 +3,11 @@ import { Button, Form } from "react-bootstrap";
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
+import Loading from "../../Shared/Loading/Loading";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   let errorElement;
@@ -32,7 +36,8 @@ const Login = () => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        signInWithEmailAndPassword(email, password)
+        signInWithEmailAndPassword(email, password, loading);
+        
     }
 
     // if(user){
@@ -40,8 +45,14 @@ const Login = () => {
     // }
     const setPassword = async ()  => {
       const email = emailRef.current.value;
-        await sendPasswordResetEmail(email);
-        alert('Sent email')
+        await sendPasswordResetEmail(email, sending);
+        if(email){
+          toast("mail has been sent !");
+        }
+        else toast("Please enter your email address")
+    }
+    if(loading || sending){
+      <Loading></Loading>
     }
 
   return (
@@ -50,23 +61,24 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control ref={emailRef} type="email" placeholder="Enter email" required />
+          <Form.Control ref={emailRef} name="email" type="email" placeholder="Enter email" required />
           <Form.Text className="text-muted">
           </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control ref={passwordRef} type="password" placeholder="Password" required/>
+          <Form.Control ref={passwordRef} name="email" type="password" placeholder="Password" required/>
         </Form.Group>
         {errorElement}
         <Button variant="primary w-50 mx-auto d-black my-2" type="submit">
           Login
         </Button>
       </Form>
-      <p>New to Genius Car?<Link to={"/register"} className="text-danger pe-auto text-decoration-none">Please Register</Link></p>
+      <p>New to Genius Car?<Link to={"/login"} className="text-danger pe-auto text-decoration-none">Please Register</Link></p>
       <p>forget password?<span onClick={setPassword} className="text-primary pe-auto text-decoration-none">send email</span></p>
       <SocialLogin></SocialLogin>
+      <ToastContainer/>
 
 
     </div>

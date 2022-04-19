@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 
+
 const Register = () => {
     const navigate = useNavigate()
     const [agree , setAgree] = useState(false);
@@ -21,6 +22,8 @@ const Register = () => {
       if(user){
         console.log(user);
       }
+
+
 
     const handleRegister = async event => {
         event.preventDefault();

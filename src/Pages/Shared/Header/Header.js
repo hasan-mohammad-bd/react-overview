@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import logo from "../../../images/banner/logo.png";
 
+
 const Header = () => {
   const navigate = useNavigate()
   const [user, loading, error] = useAuthState(auth);

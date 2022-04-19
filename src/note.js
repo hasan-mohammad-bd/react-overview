@@ -32,4 +32,7 @@ react bootstrap is same as normal bootstrap but instead of class it gives compon
 7. use url of the website.
 8. take the callback url from firebase and paste them into form
 9. copy and paste the client id and client secret from github to firebase.
+
+
+//use react toasty to use toast in react 
 */
